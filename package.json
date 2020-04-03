@@ -4,7 +4,9 @@
   "description": "Basic groupme bot for serverless functions deployment",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "now dev",
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -19,5 +21,11 @@
   "dependencies": {
     "@now/node": "^1.5.0",
     "got": "^10.7.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.5",
+    "jest": "^25.2.7",
+    "ts-jest": "^25.3.0",
+    "typescript": "^3.8.3"
   }
 }
