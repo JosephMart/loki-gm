@@ -1,5 +1,8 @@
 # loki-gm
 
+![lint](https://github.com/JosephMart/loki-gm/workflows/lint/badge.svg)
+![UnitTests](https://github.com/JosephMart/loki-gm/workflows/UnitTests/badge.svg)
+
 Basic fun little project to make a GroupMe bot called Loki
 
 ## Setup
