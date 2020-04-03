@@ -1,10 +1,9 @@
 {
   "name": "loki-gm",
   "version": "0.0.1",
-  "description": "Basic groupme bot for serverless functions deployment",
+  "description": "Basic GroupMe bot for serverless functions deployment",
   "main": "index.js",
   "scripts": {
-    "dev": "now dev",
     "test": "jest",
     "test-watch": "jest --watch"
   },
