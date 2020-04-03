@@ -1,9 +1,8 @@
 import { NowRequest, NowResponse } from "@now/node";
-import got from "got";
 
 import Handlers from "../src/handlers";
 
-export default async (req: NowRequest, res: NowResponse) => {
+export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   const groupMeReq = req.body;
   const p = Handlers.map(h => new h(groupMeReq).handle());
 
