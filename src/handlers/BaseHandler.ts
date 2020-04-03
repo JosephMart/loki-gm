@@ -41,8 +41,9 @@ abstract class BaseHandler {
       await got.post("https://api.groupme.com/v3/bots/post", {
         json
       });
-    } catch (e) {
-      console.error(`Error in sendMessage(${text}) - ${e.stack()}`);
+    } catch (_e) {
+      const e: Error = _e;
+      console.error(`Error in sendMessage(${text}) - ${e.stack}`);
     }
     console.log("response done");
   }

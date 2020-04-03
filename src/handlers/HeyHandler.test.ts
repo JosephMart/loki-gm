@@ -18,8 +18,8 @@ const DefaultGroupMeInfo = {
 
 describe("HeyHandler", () => {
   describe(".handle()", () => {
-    it("should return 0", () => {
-      expect(new HeyHandler(DefaultGroupMeInfo).handle()).toEqual(0);
+    it("should return 0", async () => {
+      expect(await new HeyHandler(DefaultGroupMeInfo).handle()).toEqual(0);
     });
   });
 
