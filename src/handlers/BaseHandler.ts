@@ -34,7 +34,7 @@ abstract class BaseHandler {
     console.log(`Sending text (${text})`);
     const json = {
       text,
-      bot_id: process.env.BOT_ID, // eslint-disable-line
+      bot_id: process.env.BOT_ID, // eslint-disable-line @typescript-eslint/camelcase
     };
 
     try {

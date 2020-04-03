@@ -3,17 +3,17 @@ import { GroupMeInfo } from "./BaseHandler";
 
 const DefaultGroupMeInfo = {
   attachments: [],
-  avatar_url: "https://i.groupme.com/123456789", //eslint-disable-line @typescript-eslint/camelcase
-  created_at: 1302623328, //eslint-disable-line @typescript-eslint/camelcase
-  group_id: "1234567890", //eslint-disable-line @typescript-eslint/camelcase
+  avatar_url: "https://i.groupme.com/123456789", // eslint-disable-line @typescript-eslint/camelcase
+  created_at: 1302623328, // eslint-disable-line @typescript-eslint/camelcase
+  group_id: "1234567890", // eslint-disable-line @typescript-eslint/camelcase
   id: "1234567890",
   name: "John",
-  sender_id: "12345", //eslint-disable-line @typescript-eslint/camelcase
-  sender_type: "user", //eslint-disable-line @typescript-eslint/camelcase
-  source_guid: "GUID", //eslint-disable-line @typescript-eslint/camelcase
+  sender_id: "12345", // eslint-disable-line @typescript-eslint/camelcase
+  sender_type: "user", // eslint-disable-line @typescript-eslint/camelcase
+  source_guid: "GUID", // eslint-disable-line @typescript-eslint/camelcase
   system: false,
   text: "Hello world ☃☃",
-  user_id: "1234567890", //eslint-disable-line @typescript-eslint/camelcase
+  user_id: "1234567890", // eslint-disable-line @typescript-eslint/camelcase
 };
 
 describe("HeyHandler", () => {
