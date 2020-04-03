@@ -1,7 +1,7 @@
 import got from "got";
 
 export type GroupMeInfo = {
-  attachments: Array<string>;
+  attachments: string[];
   avatar_url: string;
   created_at: number;
   group_id: string;
