@@ -1,15 +1,15 @@
-import BaseHandler from "./BaseHandler";
+import BaseHandler, { GroupMeInfo } from "./BaseHandler";
 
 class HeyHandler extends BaseHandler {
-  constructor(payload: any) {
+  constructor(payload: GroupMeInfo) {
     super(payload);
   }
 
-  shouldHandle() {
+  shouldHandle(): boolean {
     return this.groupMeInfo.text.toLowerCase() === "hey loki";
   }
 
-  async handle() {
+  async handle(): Promise<number> {
     if (this.shouldHandle()) {
       await this.sendMessage(`Howdy ${this.groupMeInfo.name}`);
     }

@@ -13,7 +13,7 @@ const DefaultGroupMeInfo = {
   source_guid: "GUID",
   system: false,
   text: "Hello world ☃☃",
-  user_id: "1234567890"
+  user_id: "1234567890",
 };
 
 describe("HeyHandler", () => {

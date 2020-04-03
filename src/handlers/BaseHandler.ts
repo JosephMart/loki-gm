@@ -1,7 +1,7 @@
 import got from "got";
 
 export type GroupMeInfo = {
-  attachments: Array<any>;
+  attachments: Array<string>;
   avatar_url: string;
   created_at: number;
   group_id: string;
@@ -26,26 +26,27 @@ abstract class BaseHandler {
   abstract shouldHandle(): boolean;
   abstract handle(): Promise<number>;
 
-  sanitizeText() {
+  sanitizeText(): void {
     this.groupMeInfo.text = this.groupMeInfo.text.trim();
   }
 
-  async sendMessage(text: string) {
+  async sendMessage(text: string): Promise<number> {
     console.log(`Sending text (${text})`);
     const json = {
       text,
-      bot_id: process.env.BOT_ID
+      bot_id: process.env.BOT_ID, // eslint-disable-line
     };
 
     try {
       await got.post("https://api.groupme.com/v3/bots/post", {
-        json
+        json,
       });
     } catch (_e) {
       const e: Error = _e;
       console.error(`Error in sendMessage(${text}) - ${e.stack}`);
     }
     console.log("response done");
+    return 0;
   }
 }
 
