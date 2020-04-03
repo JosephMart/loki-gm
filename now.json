@@ -1,5 +1,5 @@
 {
-  "alias": ["r0s.io", "loki-groupme-project"],
+  "alias": ["r0s.io", "loki-bot"],
   "env": {
     "BOT_ID": "@bot_id"
   }
