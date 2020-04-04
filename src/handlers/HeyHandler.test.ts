@@ -2,11 +2,12 @@ import "reflect-metadata";
 import { container } from "tsyringe";
 
 import HeyHandler from "./HeyHandler";
-import { GroupMeInfo } from "./BaseHandler";
 import HandlerRegistry from "../HandlerRegistry";
+import { GroupMeInfo } from "../services/GroupMeService";
+import "../mocks/GroupMeServiceMock";
 
 /* eslint-disable @typescript-eslint/camelcase */
-const DefaultGroupMeInfo = {
+const DefaultGroupMeInfo: GroupMeInfo = {
   attachments: [],
   avatar_url: "https://i.groupme.com/123456789",
   created_at: 1302623328,
