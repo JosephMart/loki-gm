@@ -1,4 +1,5 @@
 import got from "got";
+import HandlerConfig from "./HandlerConfig";
 
 export type GroupMeInfo = {
   attachments: string[];
@@ -16,21 +17,10 @@ export type GroupMeInfo = {
 };
 
 abstract class BaseHandler {
-  groupMeInfo: GroupMeInfo;
+  abstract readonly config: HandlerConfig;
+  abstract handle(groupMeInfo: GroupMeInfo): Promise<number>;
 
-  constructor(payload: GroupMeInfo) {
-    this.groupMeInfo = payload;
-    this.sanitizeText();
-  }
-
-  abstract shouldHandle(): boolean;
-  abstract handle(): Promise<number>;
-
-  sanitizeText(): void {
-    this.groupMeInfo.text = this.groupMeInfo.text.trim();
-  }
-
-  async sendMessage(text: string): Promise<number> {
+  protected async sendMessage(text: string): Promise<number> {
     console.log(`Sending text (${text})`);
     const json = {
       text,
