@@ -1,12 +1,17 @@
+import "reflect-metadata";
 import { NowRequest, NowResponse } from "@now/node";
+import { container } from "tsyringe";
 
-import Handlers from "../src/handlers";
+import HandlerRegistry from "../src/HandlerRegistry";
+import { GroupMeInfo } from "../src/services/GroupMeService";
 
 export default async (req: NowRequest, res: NowResponse): Promise<void> => {
-  const groupMeReq = req.body;
-  const p = Handlers.map(h => new h(groupMeReq).handle());
+  const groupMeInfo = req.body as GroupMeInfo;
 
-  await Promise.all(p);
+  const handlerRegistry = container.resolve(HandlerRegistry);
+  const actions = handlerRegistry.delegate(groupMeInfo);
+
+  await Promise.all(actions);
   console.log("in the final block");
   res.json({ response: "done" });
 };

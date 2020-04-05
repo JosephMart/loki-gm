@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "incremental": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmitOnError": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "build"
+  },
+  "include": [
+    "api/**/*.ts",
+    "src/**/*.ts"
+  ]
+}

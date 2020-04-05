@@ -1,20 +1,19 @@
-import BaseHandler, { GroupMeInfo } from "./BaseHandler";
+import { singleton, inject } from "tsyringe";
 
-class HeyHandler extends BaseHandler {
-  constructor(payload: GroupMeInfo) {
-    super(payload);
-  }
+import Handler from "./Handler";
+import HandlerConfig from "./HandlerConfig";
+import { GroupMeService, GroupMeInfo } from "../services/GroupMeService";
 
-  shouldHandle(): boolean {
-    return this.groupMeInfo.text.toLowerCase() === "hey loki";
-  }
+@singleton()
+export default class HeyHandler implements Handler {
+  private static readonly regexps = [new RegExp("hey loki", "i")];
+  readonly config: HandlerConfig = {
+    regexps: HeyHandler.regexps,
+  };
 
-  async handle(): Promise<number> {
-    if (this.shouldHandle()) {
-      await this.sendMessage(`Howdy ${this.groupMeInfo.name}`);
-    }
-    return 0;
+  constructor(@inject(GroupMeService) private readonly groupMeService: GroupMeService) {}
+
+  async handle(groupMeInfo: GroupMeInfo): Promise<number> {
+    return this.groupMeService.sendMessage(`Howdy ${groupMeInfo.name}!`);
   }
 }
-
-export default HeyHandler;

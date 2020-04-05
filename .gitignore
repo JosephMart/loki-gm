@@ -1,3 +1,5 @@
 .now
 test.ts
 .env
+node_modules
+.vscode
