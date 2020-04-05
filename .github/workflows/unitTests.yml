@@ -2,8 +2,12 @@ name: Unit Tests
 
 on:
   push:
+    paths:
+      - "**.ts"
     branches: [master]
   pull_request:
+    paths:
+      - "**.ts"
     branches: [master]
 
 jobs:
