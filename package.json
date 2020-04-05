@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
+    "coverage": "jest --coverage",
     "lint": "eslint '*/**/*.{js,ts}'",
     "now:dev": "now dev"
   },
