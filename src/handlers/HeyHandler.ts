@@ -2,7 +2,9 @@ import { singleton, inject } from "tsyringe";
 
 import Handler from "./Handler";
 import HandlerConfig from "./HandlerConfig";
-import { GroupMeService, GroupMeInfo } from "../services/GroupMeService";
+import { GroupMeInfo } from "../services/GroupMeService";
+import { Either } from "fp-ts/lib/Either";
+import MessagingService from "../services/MessagingService";
 
 @singleton()
 export default class HeyHandler implements Handler {
@@ -11,9 +13,9 @@ export default class HeyHandler implements Handler {
     regexps: HeyHandler.regexps,
   };
 
-  constructor(@inject(GroupMeService) private readonly groupMeService: GroupMeService) {}
+  constructor(@inject("MessagingService") private readonly messagingService: MessagingService) {}
 
-  async handle(groupMeInfo: GroupMeInfo): Promise<number> {
-    return this.groupMeService.sendMessage(`Howdy ${groupMeInfo.name}!`);
+  async handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, number>> {
+    return this.messagingService.sendMessage(`Howdy ${groupMeInfo.name}!`) as Promise<Either<Error, number>>;
   }
 }

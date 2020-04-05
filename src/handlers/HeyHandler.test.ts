@@ -5,6 +5,7 @@ import HeyHandler from "./HeyHandler";
 import HandlerRegistry from "../HandlerRegistry";
 import { GroupMeInfo } from "../services/GroupMeService";
 import "../mocks/GroupMeServiceMock";
+import { getOrElse } from "fp-ts/lib/Either";
 
 /* eslint-disable @typescript-eslint/camelcase */
 const DefaultGroupMeInfo: GroupMeInfo = {
@@ -34,7 +35,7 @@ describe("HeyHandler", () => {
 
   describe(".handle()", () => {
     it("should return 0", async () => {
-      expect(await heyHandler.handle(DefaultGroupMeInfo)).toEqual(0);
+      expect(getOrElse(() => -1)(await heyHandler.handle(DefaultGroupMeInfo))).toEqual(0);
     });
   });
 
