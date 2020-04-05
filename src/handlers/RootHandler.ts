@@ -23,6 +23,6 @@ export default class RootHandler extends Handler<true> {
     groupMeInfo = this.sanitizeText(groupMeInfo);
     const matchedHandlers = this.subHandlers.filter(handler => this.shouldHandle(handler, groupMeInfo));
 
-    return matchedHandlers.map(handler => handler.handle(groupMeInfo)).reduce((prev, curr) => prev.concat(curr), []);
+    return matchedHandlers.map(handler => handler.handle(groupMeInfo)).flat(Infinity);
   }
 }
