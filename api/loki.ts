@@ -4,7 +4,7 @@ import { container } from "tsyringe";
 
 import HandlerRegistry from "../src/HandlerRegistry";
 import { GroupMeInfo } from "../src/services/GroupMeService";
-import { EnvService } from "../src/services/EnvService";
+import { EnvConfigService } from "../src/services/EnvConfigService";
 
 /**
  * The main lambda for the Loki GroupMe bot. It is the callback that GroupMe will
@@ -13,7 +13,7 @@ import { EnvService } from "../src/services/EnvService";
 export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   const groupMeInfo = req.body as GroupMeInfo;
 
-  container.register(EnvService, { useValue: new EnvService({ groupID: groupMeInfo.group_id }) });
+  container.register(EnvConfigService, { useValue: new EnvConfigService({ groupID: groupMeInfo.group_id }) });
 
   const handlerRegistry = container.resolve(HandlerRegistry);
   const actions = handlerRegistry.delegate(groupMeInfo);

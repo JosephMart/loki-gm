@@ -1,13 +1,15 @@
-import { singleton } from "tsyringe";
+import { singleton, injectable } from "tsyringe";
 
 import { GroupMeInfo } from "./GroupMeService";
 
 @singleton()
-export class EnvService {
-  opts: EnvServiceOpts;
+@injectable()
+export class EnvConfigService {
+  opts: EnvConfigServiceOpts;
 
-  public constructor(opts: EnvServiceOpts) {
+  public constructor(opts: EnvConfigServiceOpts) {
     this.opts = opts;
+    console.log(`EnvConfigServiceOpts: ${JSON.stringify(this.opts)}`);
   }
 
   /**
@@ -15,7 +17,7 @@ export class EnvService {
    * If PROD GroupMe ID is passed to CTOR, Prod BOT_ID is returned
    */
   public get BotID(): string {
-    return this.opts.groupID === this.ProdGroupID ? this.ProdBotID : this.DevBotID;
+    return this.opts.groupID !== this.ProdGroupID ? this.ProdBotID : this.DevBotID;
   }
 
   private get ProdGroupID(): string {
@@ -35,6 +37,6 @@ export class EnvService {
   }
 }
 
-export type EnvServiceOpts = {
+export type EnvConfigServiceOpts = {
   groupID?: GroupMeInfo["group_id"];
 };

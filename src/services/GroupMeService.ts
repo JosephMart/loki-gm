@@ -1,15 +1,21 @@
-import { singleton } from "tsyringe";
+import { singleton, inject } from "tsyringe";
 import got from "got";
 
-import { EnvService } from "./EnvService";
+import { EnvConfigService } from "./EnvConfigService";
 
 @singleton()
 export class GroupMeService {
+  private readonly envConfigService: EnvConfigService;
+
+  constructor(@inject(EnvConfigService) envConfigService: EnvConfigService) {
+    this.envConfigService = envConfigService;
+  }
+
   async sendMessage(text: string, groupMeInfo: GroupMeInfo): Promise<number> {
     console.log(`Sending text (${text})`);
     const json = {
       text,
-      bot_id: new EnvService({ groupID: groupMeInfo.group_id }).BotID, // eslint-disable-line @typescript-eslint/camelcase
+      bot_id: this.envConfigService.BotID, // eslint-disable-line @typescript-eslint/camelcase
     };
 
     try {
