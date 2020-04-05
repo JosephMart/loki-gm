@@ -5,14 +5,14 @@ export class Member {
   @ObjectIdColumn()
   _id: ObjectID;
 
-  @Column()
-  user_id: string;
+  @Column({ name: "user_id" })
+  userID: string;
 
   @Column()
   nickname: string;
 
-  @Column()
-  image_url: string;
+  @Column({ name: "image_url" })
+  imageUrl: string;
 
   @Column()
   id: string;
