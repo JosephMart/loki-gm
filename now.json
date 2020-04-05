@@ -1,7 +1,10 @@
 {
   "alias": ["r0s.io", "loki-bot"],
   "env": {
-    "BOT_ID": "@bot_id",
+    "PROD_GROUP_ID": "@freaks_group_id",
+    "DEV_GROUP_ID": "@devs_group_id",
+    "PROD_BOT_ID": "@loki_bot_id",
+    "DEV_BOT_ID": "@ironman_bot_id",
     "MONGODB_URL": "@loki_typeorm_url"
   }
 }

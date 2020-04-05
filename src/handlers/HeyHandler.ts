@@ -14,6 +14,6 @@ export default class HeyHandler implements Handler {
   constructor(@inject(GroupMeService) private readonly groupMeService: GroupMeService) {}
 
   async handle(groupMeInfo: GroupMeInfo): Promise<number> {
-    return this.groupMeService.sendMessage(`Howdy ${groupMeInfo.name}!`);
+    return this.groupMeService.sendMessage(`Howdy ${groupMeInfo.name}!`, groupMeInfo);
   }
 }
