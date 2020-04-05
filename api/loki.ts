@@ -5,6 +5,10 @@ import { container } from "tsyringe";
 import HandlerRegistry from "../src/HandlerRegistry";
 import { GroupMeInfo } from "../src/services/GroupMeService";
 
+/**
+ * The main lambda for the Loki GroupMe bot. It is the callback that GroupMe will
+ * hit with data in the form of GroupeMeInfo. Endpoint is BASE_URL/api/loki
+ */
 export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   const groupMeInfo = req.body as GroupMeInfo;
 

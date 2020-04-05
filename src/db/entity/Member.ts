@@ -1,5 +1,9 @@
 import { Entity, ObjectIdColumn, ObjectID, Column } from "typeorm";
 
+/**
+ * Member is of the form of a how GroupMe stores member data
+ * of a GroupMe group.
+ */
 @Entity()
 export class Member {
   @ObjectIdColumn()
