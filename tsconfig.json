@@ -1,12 +1,19 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6"],
-    "target": "es5",
+    "target": "es2019",
+    "incremental": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmitOnError": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./build",
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true
-  }
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "build"
+  },
+  "include": ["api/**/*.ts", "src/**/*.ts"]
 }
