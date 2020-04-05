@@ -1,6 +1,7 @@
 {
   "alias": ["r0s.io", "loki-bot"],
   "env": {
-    "BOT_ID": "@bot_id"
+    "BOT_ID": "@bot_id",
+    "MONGODB_URL": "@loki_typeorm_url"
   }
 }

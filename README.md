@@ -2,6 +2,7 @@
 
 ![lint](https://github.com/JosephMart/loki-gm/workflows/lint/badge.svg)
 ![UnitTests](https://github.com/JosephMart/loki-gm/workflows/UnitTests/badge.svg)
+[![codecov](https://codecov.io/gh/JosephMart/loki-gm/branch/master/graph/badge.svg)](https://codecov.io/gh/JosephMart/loki-gm)
 
 Basic fun little project to make a GroupMe bot called Loki
 
