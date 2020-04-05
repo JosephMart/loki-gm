@@ -1,5 +1,5 @@
 type HandlerConfig = {
-  regexps: RegExp[];
+  regexp: RegExp;
 };
 
 export default HandlerConfig;

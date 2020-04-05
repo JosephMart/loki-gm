@@ -7,15 +7,16 @@ import { Either } from "fp-ts/lib/Either";
 import MessagingService from "../services/MessagingService";
 
 @singleton()
-export default class HeyHandler implements Handler {
-  private static readonly regexps = [new RegExp("hey loki", "i")];
+export default class HeyHandler extends Handler {
   readonly config: HandlerConfig = {
-    regexps: HeyHandler.regexps,
+    regexp: new RegExp("hey loki", "i"),
   };
 
-  constructor(@inject("MessagingService") private readonly messagingService: MessagingService) {}
+  constructor(@inject("MessagingService") private readonly messagingService: MessagingService) {
+    super();
+  }
 
-  async handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, number>> {
-    return this.messagingService.sendMessage(`Howdy ${groupMeInfo.name}!`) as Promise<Either<Error, number>>;
+  handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, unknown>>[] {
+    return super.handle(groupMeInfo).concat(this.messagingService.sendMessage(`Howdy ${groupMeInfo.name}!`));
   }
 }
