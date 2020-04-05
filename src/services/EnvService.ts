@@ -15,22 +15,22 @@ export class EnvService {
    * If PROD GroupMe ID is passed to CTOR, Prod BOT_ID is returned
    */
   public get BotID(): string {
-    return this.opts.groupID === this.getProdGroupID ? this.getProdBotID : this.getDevBotID;
+    return this.opts.groupID === this.ProdGroupID ? this.ProdBotID : this.DevBotID;
   }
 
-  private get getProdGroupID(): string {
+  private get ProdGroupID(): string {
     return String(process.env.PROD_GROUP_ID);
   }
 
-  private get getDevGroupID(): string {
+  private get DevGroupID(): string {
     return String(process.env.DEV_GROUP_ID);
   }
 
-  private get getProdBotID(): string {
+  private get ProdBotID(): string {
     return String(process.env.PROD_BOT_ID);
   }
 
-  private get getDevBotID(): string {
+  private get DevBotID(): string {
     return String(process.env.DEV_BOT_ID);
   }
 }
