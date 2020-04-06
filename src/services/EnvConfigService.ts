@@ -1,15 +1,11 @@
-import { singleton, injectable } from "tsyringe";
+import { singleton } from "tsyringe";
 
 import { GroupMeInfo } from "./GroupMeService";
 
 @singleton()
-@injectable()
 export class EnvConfigService {
-  opts: EnvConfigServiceOpts;
-
-  public constructor(opts: EnvConfigServiceOpts) {
-    this.opts = opts;
-    console.log(`EnvConfigServiceOpts: ${JSON.stringify(this.opts)}`);
+  public constructor(private readonly opts: EnvConfigServiceOpts) {
+    console.log(`EnvConfigServiceOpts: ${opts.groupID}`);
   }
 
   /**
