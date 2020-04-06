@@ -14,11 +14,19 @@ export default class RootHandler extends Handler<true> {
     this.register(heyHandler);
   }
 
+  /**
+   * Sanitizes text using various operations like whitespace trimming.
+   * @param groupMeInfo
+   */
   sanitizeText(groupMeInfo: GroupMeInfo): GroupMeInfo {
     groupMeInfo.text = groupMeInfo.text.trim();
     return groupMeInfo;
   }
 
+  /**
+   * Entry point for handling a message. Passes the information onto its subhandlers.
+   * @param groupMeInfo
+   */
   handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, unknown>>[] {
     groupMeInfo = this.sanitizeText(groupMeInfo);
     const matchedHandlers = this.subHandlers.filter(handler => this.shouldHandle(handler, groupMeInfo));

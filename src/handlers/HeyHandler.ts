@@ -16,7 +16,12 @@ export default class HeyHandler extends Handler {
     super();
   }
 
+  /**
+   * Performs its own handler functions as well as calls those it is the root of.
+   * @param groupMeInfo
+   */
   handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, unknown>>[] {
-    return super.handle(groupMeInfo).concat(this.messagingService.sendMessage(`Howdy ${groupMeInfo.name}!`));
+    const result = this.messagingService.sendMessage(`Howdy ${groupMeInfo.name}!`);
+    return [result, ...super.handle(groupMeInfo)];
   }
 }
