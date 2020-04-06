@@ -1,7 +1,6 @@
 import { singleton } from "tsyringe";
 import got from "got";
 import { Either, right, left } from "fp-ts/lib/Either";
-
 import MessagingService from "./MessagingService";
 
 /**

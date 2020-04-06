@@ -1,13 +1,11 @@
-import Handler from "./Handler";
 import { singleton, inject } from "tsyringe";
 import { Either } from "fp-ts/lib/Either";
-
+import Handler from "./Handler";
 import { GroupMeInfo } from "../services/GroupMeService";
-import "./HeyHandler";
 import HeyHandler from "./HeyHandler";
 
 @singleton()
-export default class RootHandler extends Handler<true> {
+export default class RootHandler extends Handler<GroupMeInfo, true> {
   constructor(@inject(HeyHandler) heyHandler: HeyHandler) {
     super();
 
@@ -18,7 +16,7 @@ export default class RootHandler extends Handler<true> {
    * Sanitizes text using various operations like whitespace trimming.
    * @param groupMeInfo
    */
-  sanitizeText(groupMeInfo: GroupMeInfo): GroupMeInfo {
+  sanitize(groupMeInfo: GroupMeInfo): GroupMeInfo {
     groupMeInfo.text = groupMeInfo.text.trim();
     return groupMeInfo;
   }
@@ -28,9 +26,7 @@ export default class RootHandler extends Handler<true> {
    * @param groupMeInfo
    */
   handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, unknown>>[] {
-    groupMeInfo = this.sanitizeText(groupMeInfo);
-    const matchedHandlers = this.subHandlers.filter(handler => this.shouldHandle(handler, groupMeInfo));
-
-    return matchedHandlers.map(handler => handler.handle(groupMeInfo)).flat(Infinity);
+    groupMeInfo = this.sanitize(groupMeInfo);
+    return super.handle(groupMeInfo);
   }
 }

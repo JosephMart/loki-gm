@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-
 import HeyHandler from "./HeyHandler";
 import RootHandler from "./RootHandler";
 import { GroupMeInfo } from "../services/GroupMeService";
@@ -35,7 +34,7 @@ describe("HeyHandler", () => {
 
   describe(".handle()", () => {
     it("should return 0", async () => {
-      const actions = await heyHandler.handle(DefaultGroupMeInfo);
+      const actions = await rootHandler.handle(DefaultGroupMeInfo);
       const results = (await Promise.all(actions)).map(result => (isLeft(result) ? -1 : (result.right as number)));
 
       expect(results).toEqual(expect.not.arrayContaining([-1]));
@@ -47,7 +46,7 @@ describe("HeyHandler", () => {
     ["hey loki", "HEY LOKI", " hEy LOki ", "Hey Loki"].map(text => {
       it(`return true for ${text}`, () => {
         const payload: GroupMeInfo = { ...DefaultGroupMeInfo, text };
-        expect(rootHandler.shouldHandle(heyHandler, payload)).toEqual(true);
+        expect(heyHandler.shouldHandle(payload)).toEqual(true);
       });
     });
 
@@ -55,7 +54,7 @@ describe("HeyHandler", () => {
     ["lol", "lddd", "  ", "boo"].map(text => {
       it(`return false for ${text}`, () => {
         const payload: GroupMeInfo = { ...DefaultGroupMeInfo, text };
-        expect(rootHandler.shouldHandle(heyHandler, payload)).toEqual(false);
+        expect(heyHandler.shouldHandle(payload)).toEqual(false);
       });
     });
   });
