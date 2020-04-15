@@ -26,7 +26,7 @@ export class GroupMeService {
       const e: Error = _e;
       console.error(`Error in sendMessage(${text}) - ${e.stack}`);
     }
-    console.log("response done");
+    console.log("Finish sending text");
     return 0;
   }
 }

@@ -13,7 +13,7 @@ import { EnvConfigService } from "../src/services/EnvConfigService";
 export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   const groupMeInfo = req.body as GroupMeInfo;
 
-  container.register(EnvConfigService, { useValue: new EnvConfigService({ groupID: groupMeInfo.group_id }) });
+  container.register(EnvConfigService, { useValue: new EnvConfigService() });
 
   const handlerRegistry = container.resolve(HandlerRegistry);
   const actions = handlerRegistry.delegate(groupMeInfo);
