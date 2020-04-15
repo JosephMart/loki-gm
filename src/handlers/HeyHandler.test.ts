@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-
 import HeyHandler from "./HeyHandler";
-import HandlerRegistry from "../HandlerRegistry";
+import RootHandler from "./RootHandler";
 import { GroupMeInfo } from "../services/GroupMeService";
 import "../mocks/GroupMeServiceMock";
+import { isLeft } from "fp-ts/lib/Either";
 
 /* eslint-disable @typescript-eslint/camelcase */
 const DefaultGroupMeInfo: GroupMeInfo = {
@@ -24,17 +24,20 @@ const DefaultGroupMeInfo: GroupMeInfo = {
 /* eslint-enable @typescript-eslint/camelcase */
 
 describe("HeyHandler", () => {
-  let handlerRegistry: HandlerRegistry;
+  let rootHandler: RootHandler;
   let heyHandler: HeyHandler;
 
   beforeAll(() => {
-    handlerRegistry = container.resolve(HandlerRegistry);
+    rootHandler = container.resolve(RootHandler);
     heyHandler = container.resolve(HeyHandler);
   });
 
   describe(".handle()", () => {
     it("should return 0", async () => {
-      expect(await heyHandler.handle(DefaultGroupMeInfo)).toEqual(0);
+      const actions = await rootHandler.handle(DefaultGroupMeInfo);
+      const results = (await Promise.all(actions)).map(result => (isLeft(result) ? -1 : (result.right as number)));
+
+      expect(results).toEqual(expect.not.arrayContaining([-1]));
     });
   });
 
@@ -43,7 +46,7 @@ describe("HeyHandler", () => {
     ["hey loki", "HEY LOKI", " hEy LOki ", "Hey Loki"].map(text => {
       it(`return true for ${text}`, () => {
         const payload: GroupMeInfo = { ...DefaultGroupMeInfo, text };
-        expect(handlerRegistry.shouldHandle(heyHandler, payload)).toEqual(true);
+        expect(heyHandler.shouldHandle(payload)).toEqual(true);
       });
     });
 
@@ -51,7 +54,7 @@ describe("HeyHandler", () => {
     ["lol", "lddd", "  ", "boo"].map(text => {
       it(`return false for ${text}`, () => {
         const payload: GroupMeInfo = { ...DefaultGroupMeInfo, text };
-        expect(handlerRegistry.shouldHandle(heyHandler, payload)).toEqual(false);
+        expect(heyHandler.shouldHandle(payload)).toEqual(false);
       });
     });
   });
