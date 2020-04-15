@@ -1,6 +1,8 @@
-import { singleton } from "tsyringe";
+import { singleton, inject } from "tsyringe";
 import got from "got";
 import { Either, right, left } from "fp-ts/lib/Either";
+
+import EnvConfigService from "./EnvConfigService";
 import MessagingService from "./MessagingService";
 
 /**
@@ -8,6 +10,11 @@ import MessagingService from "./MessagingService";
  */
 @singleton()
 export class GroupMeService implements MessagingService {
+  private readonly envConfigService: EnvConfigService;
+
+  constructor(@inject(EnvConfigService) envConfigService: EnvConfigService) {
+    this.envConfigService = envConfigService;
+  }
   /**
    * Sends a message to GroupMe.
    * @param text
@@ -16,7 +23,7 @@ export class GroupMeService implements MessagingService {
     console.log(`Sending text (${text})`);
     const json = {
       text,
-      bot_id: process.env.BOT_ID, // eslint-disable-line @typescript-eslint/camelcase
+      bot_id: this.envConfigService.BotID, // eslint-disable-line @typescript-eslint/camelcase
     };
 
     try {
