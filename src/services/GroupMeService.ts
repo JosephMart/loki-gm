@@ -1,11 +1,17 @@
 import { singleton } from "tsyringe";
 import got from "got";
 import { Either, right, left } from "fp-ts/lib/Either";
-
 import MessagingService from "./MessagingService";
 
+/**
+ * GroupMeService is a MessagingService implementation for GroupMe.
+ */
 @singleton()
 export class GroupMeService implements MessagingService {
+  /**
+   * Sends a message to GroupMe.
+   * @param text
+   */
   async sendMessage(text: string): Promise<Either<Error, number>> {
     console.log(`Sending text (${text})`);
     const json = {
@@ -26,6 +32,9 @@ export class GroupMeService implements MessagingService {
   }
 }
 
+/**
+ * The information GroupMe attaches to requests.
+ */
 export type GroupMeInfo = {
   attachments: string[];
   avatar_url: string;
