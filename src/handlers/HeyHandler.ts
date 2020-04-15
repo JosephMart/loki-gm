@@ -20,8 +20,7 @@ export default class HeyHandler extends Handler<GroupMeInfo> {
    * @param groupMeInfo
    */
   shouldHandle = (groupMeInfo: GroupMeInfo): boolean => {
-    const passed = this.config.regexp.test(groupMeInfo.text);
-    return passed;
+    return this.config.regexp.test(groupMeInfo.text);
   };
 
   /**
