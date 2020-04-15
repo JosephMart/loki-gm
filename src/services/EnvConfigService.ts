@@ -3,7 +3,7 @@ import { singleton } from "tsyringe";
 import { GroupMeInfo } from "./GroupMeService";
 
 @singleton()
-export class EnvConfigService {
+export default class EnvConfigService {
   public get GroupID(): string {
     return String(process.env.GROUP_ID);
   }

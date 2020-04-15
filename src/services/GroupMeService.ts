@@ -1,17 +1,25 @@
 import { singleton, inject } from "tsyringe";
 import got from "got";
+import { Either, right, left } from "fp-ts/lib/Either";
 
-import { EnvConfigService } from "./EnvConfigService";
+import EnvConfigService from "./EnvConfigService";
+import MessagingService from "./MessagingService";
 
+/**
+ * GroupMeService is a MessagingService implementation for GroupMe.
+ */
 @singleton()
-export class GroupMeService {
+export class GroupMeService implements MessagingService {
   private readonly envConfigService: EnvConfigService;
 
   constructor(@inject(EnvConfigService) envConfigService: EnvConfigService) {
     this.envConfigService = envConfigService;
   }
-
-  async sendMessage(text: string, groupMeInfo: GroupMeInfo): Promise<number> {
+  /**
+   * Sends a message to GroupMe.
+   * @param text
+   */
+  async sendMessage(text: string): Promise<Either<Error, number>> {
     console.log(`Sending text (${text})`);
     const json = {
       text,
@@ -22,15 +30,18 @@ export class GroupMeService {
       await got.post("https://api.groupme.com/v3/bots/post", {
         json,
       });
-    } catch (_e) {
-      const e: Error = _e;
-      console.error(`Error in sendMessage(${text}) - ${e.stack}`);
+    } catch (e) {
+      return left(e as Error);
     }
-    console.log("Finish sending text");
-    return 0;
+
+    console.log("response done");
+    return right(0);
   }
 }
 
+/**
+ * The information GroupMe attaches to requests.
+ */
 export type GroupMeInfo = {
   attachments: string[];
   avatar_url: string;

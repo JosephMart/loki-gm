@@ -1,10 +1,11 @@
 import "reflect-metadata";
 import { NowRequest, NowResponse } from "@now/node";
 import { container } from "tsyringe";
+import { isLeft } from "fp-ts/lib/Either";
 
-import HandlerRegistry from "../src/HandlerRegistry";
-import { GroupMeInfo } from "../src/services/GroupMeService";
-import { EnvConfigService } from "../src/services/EnvConfigService";
+import RootHandler from "../src/handlers/RootHandler";
+import { GroupMeInfo, GroupMeService } from "../src/services/GroupMeService";
+import EnvConfigService from "../src/services/EnvConfigService";
 
 /**
  * The main lambda for the Loki GroupMe bot. It is the callback that GroupMe will
@@ -13,12 +14,16 @@ import { EnvConfigService } from "../src/services/EnvConfigService";
 export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   const groupMeInfo = req.body as GroupMeInfo;
 
-  container.register(EnvConfigService, { useValue: new EnvConfigService() });
+  container.register("MessagingService", { useValue: new GroupMeService(new EnvConfigService()) });
+  const handlerRegistry = container.resolve(RootHandler);
+  const actions = handlerRegistry.handle(groupMeInfo);
+  const results = await Promise.all(actions);
+  results.forEach(r => {
+    if (isLeft(r)) {
+      console.error(r.left.stack);
+    }
+  });
 
-  const handlerRegistry = container.resolve(HandlerRegistry);
-  const actions = handlerRegistry.delegate(groupMeInfo);
-
-  await Promise.all(actions);
   console.log("in the final block");
   res.json({ response: "done" });
 };
