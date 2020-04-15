@@ -14,7 +14,7 @@ import EnvConfigService from "../src/services/EnvConfigService";
 export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   const groupMeInfo = req.body as GroupMeInfo;
 
-  container.register("MessagingService", { useValue: new GroupMeService(new EnvConfigService()) });
+  container.register("MessagingService", { useClass: GroupMeService });
   const handlerRegistry = container.resolve(RootHandler);
   const actions = handlerRegistry.handle(groupMeInfo);
   const results = await Promise.all(actions);

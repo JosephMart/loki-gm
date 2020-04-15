@@ -1,8 +1,8 @@
-import { singleton } from "tsyringe";
+import { injectable } from "tsyringe";
 
 import { GroupMeInfo } from "./GroupMeService";
 
-@singleton()
+@injectable()
 export default class EnvConfigService {
   public get GroupID(): string {
     return String(process.env.GROUP_ID);
