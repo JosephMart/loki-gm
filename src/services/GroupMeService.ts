@@ -17,6 +17,7 @@ export class GroupMeService implements MessagingService {
   constructor(@inject(EnvConfigService) envConfigService: EnvConfigService) {
     this.envConfigService = envConfigService;
   }
+
   /**
    * Sends a message to GroupMe.
    * @param text
@@ -30,7 +31,7 @@ export class GroupMeService implements MessagingService {
     };
 
     try {
-      await got.post(`${GroupMeAPI}/users`, {
+      await got.post(`${GroupMeAPI}/bots/post`, {
         json,
       });
     } catch (e) {
