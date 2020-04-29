@@ -119,8 +119,13 @@ export type GroupMeGroupInfo = {
 /**
  * Attachments to be sent as part of payload
  */
-export type GroupMeMention = { loci: Array<[number, number]>; type: "mentions"; user_ids: string[] };
+export type GroupMeEmoji = {
+  type: "emoji";
+  placeholder: string;
+  charmap: Array<[number, number]>;
+};
 export type GroupMeImage = { type: "image"; url: string };
+export type GroupMeMention = { loci: Array<[number, number]>; type: "mentions"; user_ids: string[] };
 export type GroupMeLocation = {
   type: "location";
   lng: string;
