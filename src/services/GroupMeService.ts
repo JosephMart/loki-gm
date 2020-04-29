@@ -19,11 +19,12 @@ export class GroupMeService implements MessagingService {
    * Sends a message to GroupMe.
    * @param text
    */
-  async sendMessage(text: string): Promise<Either<Error, number>> {
+  async sendMessage(text: string, attachments: GroupMeAttachment[] = []): Promise<Either<Error, number>> {
     console.log(`Sending text (${text})`);
-    const json = {
+    const json: GroupMePayload = {
       text,
       bot_id: this.envConfigService.BotID, // eslint-disable-line @typescript-eslint/camelcase
+      attachments,
     };
 
     try {
@@ -38,6 +39,23 @@ export class GroupMeService implements MessagingService {
     return right(0);
   }
 }
+
+export type GroupMeMention = { loci: [number, number]; type: "mentions"; user_ids: string[] };
+export type GroupMeImage = { type: string; url: string };
+export type GroupMeLocation = {
+  type: string;
+  lng: string;
+  lat: string;
+  name: string;
+};
+
+export type GroupMeAttachment = GroupMeMention | GroupMeImage | GroupMeLocation;
+
+type GroupMePayload = {
+  text: string;
+  bot_id: string;
+  attachments?: GroupMeAttachment[];
+};
 
 /**
  * The information GroupMe attaches to requests.

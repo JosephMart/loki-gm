@@ -5,7 +5,6 @@ import { isLeft } from "fp-ts/lib/Either";
 
 import RootHandler from "../src/handlers/RootHandler";
 import { GroupMeInfo, GroupMeService } from "../src/services/GroupMeService";
-import EnvConfigService from "../src/services/EnvConfigService";
 
 /**
  * The main lambda for the Loki GroupMe bot. It is the callback that GroupMe will
