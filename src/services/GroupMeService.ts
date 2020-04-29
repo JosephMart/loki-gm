@@ -103,14 +103,14 @@ export type GroupMeGroupInfo = {
     preview: {
       nickname: string;
       text: string;
-      image_url: "https://i.groupme.com/852x852.jpeg.d82cfc5635944c2fb290d84486d99527";
+      image_url: string;
       attachments: GroupMeAttachment[];
     };
   };
   max_members: number;
 };
 
-export type GroupMeMention = { loci: [number, number]; type: "mentions"; user_ids: string[] };
+export type GroupMeMention = { loci: Array<[number, number]>; type: "mentions"; user_ids: string[] };
 export type GroupMeImage = { type: string; url: string };
 export type GroupMeLocation = {
   type: string;
