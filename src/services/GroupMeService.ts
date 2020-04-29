@@ -69,6 +69,9 @@ export class GroupMeService implements MessagingService {
   }
 }
 
+/**
+ * GroupMeUser info around a User in a group
+ */
 export type GroupMeUser = {
   user_id: string;
   nickname: string;
@@ -80,6 +83,9 @@ export type GroupMeUser = {
   name: string;
 };
 
+/**
+ * GroupMeGroupInfo contains all info you get can about a particular group
+ */
 export type GroupMeGroupInfo = {
   id: string;
   group_id: string;
@@ -110,10 +116,13 @@ export type GroupMeGroupInfo = {
   max_members: number;
 };
 
+/**
+ * Attachments to be sent as part of payload
+ */
 export type GroupMeMention = { loci: Array<[number, number]>; type: "mentions"; user_ids: string[] };
-export type GroupMeImage = { type: string; url: string };
+export type GroupMeImage = { type: "image"; url: string };
 export type GroupMeLocation = {
-  type: string;
+  type: "location";
   lng: string;
   lat: string;
   name: string;
