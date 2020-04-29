@@ -1,7 +1,5 @@
 import { injectable } from "tsyringe";
 
-import { GroupMeInfo } from "./GroupMeService";
-
 @injectable()
 export default class EnvConfigService {
   public get GroupID(): string {

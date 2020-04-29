@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { NowRequest, NowResponse } from "@now/node";
-import { GroupMeInfo, GroupMeService } from "../src/services/GroupMeService";
+import { GroupMeService } from "../src/services/GroupMeService";
 import EnvConfigService from "../src/services/EnvConfigService";
 
 /**
