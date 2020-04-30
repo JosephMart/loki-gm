@@ -6,7 +6,8 @@ import { Either } from "fp-ts/lib/Either";
 export default interface MessagingService {
   /**
    * Send a message across the service.
+   * @param text
    * @param args
    */
-  sendMessage(...args: unknown[]): Promise<Either<Error, unknown>>;
+  sendMessage(text: string, ...args: unknown[]): Promise<Either<Error, unknown>>;
 }

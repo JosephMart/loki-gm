@@ -1,22 +1,25 @@
 import { singleton, inject } from "tsyringe";
 import { Either } from "fp-ts/lib/Either";
-import Handler from "./Handler";
 import HandlerConfig from "./HandlerConfig";
-import MessagingService from "../services/MessagingService";
 import { GroupMeInfo } from "../groupMe";
+import GroupMeHandler from "./GroupMeHandler";
+import GroupMeService from "../services/GroupMeService";
 
+/**
+ * Responds hey to the user who summoned the bot.
+ */
 @singleton()
-export default class HeyHandler extends Handler<GroupMeInfo> {
+export default class HeyHandler extends GroupMeHandler {
   readonly config: HandlerConfig = {
     regexp: new RegExp("hey loki", "i"),
   };
 
-  constructor(@inject("MessagingService") private readonly messagingService: MessagingService) {
+  constructor(@inject(GroupMeService) private readonly groupMeService: GroupMeService) {
     super();
   }
 
   /**
-   * Returns a boolean saying whether or not the handler should handle the information is is given.
+   * Returns a boolean saying whether or not the handler should handle the information it is given.
    * @param groupMeInfo
    */
   shouldHandle = (groupMeInfo: GroupMeInfo): boolean => {
@@ -27,8 +30,8 @@ export default class HeyHandler extends Handler<GroupMeInfo> {
    * Performs its own handler functions as well as calls those it is the root of.
    * @param groupMeInfo
    */
-  handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, unknown>>[] {
-    const result = this.messagingService.sendMessage(`Howdy ${groupMeInfo.name}!`);
-    return [result, ...super.handle(groupMeInfo)];
+  async handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, number>[]> {
+    const result = await this.groupMeService.sendMessage(`Howdy ${groupMeInfo.name}!`);
+    return [result, ...(await super.handle(groupMeInfo))];
   }
 }

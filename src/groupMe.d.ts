@@ -26,7 +26,7 @@ export type GroupMeGroupInfo = {
   creator_user_id: string;
   created_at: number;
   updated_at: number;
-  muted_until: null; // not sure about this
+  muted_until?: number; // not sure about this
   office_mode: boolean;
   share_url: string;
   share_qr_code_url: string;
@@ -86,4 +86,14 @@ export type GroupMeInfo = {
   system: boolean;
   text: string;
   user_id: string;
+};
+
+/**
+ * Response type of the GroupMe API. T represents in the response body.
+ */
+export type GroupMeResponse<T> = {
+  response: T;
+  meta: {
+    code: number;
+  };
 };

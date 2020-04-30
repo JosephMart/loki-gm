@@ -4,15 +4,16 @@ import { Either, right, left, isLeft } from "fp-ts/lib/Either";
 
 import EnvConfigService from "./EnvConfigService";
 import MessagingService from "./MessagingService";
-import { GroupMeAttachment, GroupMePayload, GroupMeUser, GroupMeGroupInfo } from "../groupMe";
+import { GroupMeAttachment, GroupMePayload, GroupMeUser, GroupMeGroupInfo, GroupMeResponse } from "../groupMe";
+import GroupService from "./GroupService";
 
 const GroupMeAPI = "https://api.groupme.com/v3";
 
 /**
- * GroupMeService is a MessagingService implementation for GroupMe.
+ * GroupMeService is a MessagingService and GroupService implementation for GroupMe.
  */
 @singleton()
-export default class GroupMeService implements MessagingService {
+export default class GroupMeService implements MessagingService, GroupService<GroupMeGroupInfo, GroupMeUser> {
   private readonly envConfigService: EnvConfigService;
 
   constructor(@inject(EnvConfigService) envConfigService: EnvConfigService) {
@@ -44,14 +45,15 @@ export default class GroupMeService implements MessagingService {
   }
 
   /**
-   * Get list of users the bot is registered to according to the env
+   * Get list of users the bot is registered to according to the env.
    */
-  async getUsers(): Promise<Either<Error, GroupMeUser[]>> {
+  async getMembers(): Promise<Either<Error, GroupMeUser[]>> {
     try {
-      const result = await this.getGroupInfo();
+      const result = await this.getInfo();
       if (isLeft(result)) {
         return result;
       }
+      console.log(`mem: ${result.right.members}`);
 
       return right(result.right.members);
     } catch (e) {
@@ -60,16 +62,17 @@ export default class GroupMeService implements MessagingService {
   }
 
   /**
-   * Get group info
+   * Get group info.
    */
-  async getGroupInfo(): Promise<Either<Error, GroupMeGroupInfo>> {
+  async getInfo(): Promise<Either<Error, GroupMeGroupInfo>> {
     try {
       const { response } = await got
         .get(`${GroupMeAPI}/groups/${this.envConfigService.GroupID}?token=${this.envConfigService.GroupMeAPIKey}`)
-        .json();
+        .json<GroupMeResponse<GroupMeGroupInfo>>();
 
-      return right(response as GroupMeGroupInfo);
+      return right(response);
     } catch (e) {
+      console.error(e);
       return left(e as Error);
     }
   }
