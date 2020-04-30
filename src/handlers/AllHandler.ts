@@ -44,13 +44,11 @@ export default class AllHandler extends GroupMeHandler {
     let start = 0;
     membersResult.right.forEach(m => {
       // +1 for @
-      const end = start + m.nickname.length;
-      loci.push([start, end]);
-      // +1 for space separator and other one for some random reason :)
-      start += end + 2;
+      const length = m.nickname.length + 1;
+      loci.push([start, length + 1]);
+      // +1 for space separator
+      start += length + 1;
     });
-
-    console.log(loci);
 
     const result = await this.groupMeService.sendMessage(
       `${mentionString}${messageText.length === 0 ? messageText : `: ${messageText}`}`,
