@@ -9,7 +9,7 @@
     "coverage": "jest --coverage",
     "lint": "eslint '{api,src}/**/*.{js,ts}'",
     "now:dev": "now dev",
-    "build": "tsc"
+    "compile": "tsc"
   },
   "repository": {
     "type": "git",
