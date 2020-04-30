@@ -9,7 +9,7 @@ import GroupMeHandler from "./GroupMeHandler";
 @singleton()
 export default class AllHandler extends GroupMeHandler {
   readonly config: HandlerConfig = {
-    regexp: /(^|\s+)@all($|\s+)/i,
+    regexp: /(^|\s*)@all($|\s*)/i,
   };
 
   constructor(@inject(GroupMeService) private readonly groupMeService: GroupMeService) {
@@ -36,7 +36,7 @@ export default class AllHandler extends GroupMeHandler {
     }
 
     const messageText = groupMeInfo.text
-      .split(/(^|\s+)@all($|\s+)/i)
+      .split(/(^|\s*)@all($|\s*)/i)
       .reduce((prev, curr) => (prev.length === 0 ? curr.trim() : `${prev} ${curr.trim()}`), "");
     const memberIds = membersResult.right.map(m => m.user_id);
     const mentionString = membersResult.right.map(m => `@${m.nickname}`).join(" ");
@@ -51,7 +51,7 @@ export default class AllHandler extends GroupMeHandler {
     });
 
     const result = await this.groupMeService.sendMessage(
-      `${mentionString}${messageText.length === 0 ? messageText : `: ${messageText}`}`,
+      `${mentionString}${messageText.trim().length === 0 ? messageText : `: ${messageText}`}`,
       [
         {
           loci,
