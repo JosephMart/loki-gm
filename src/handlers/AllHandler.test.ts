@@ -52,7 +52,7 @@ describe("AllHandler", () => {
     });
 
     // Should handle these
-    ["all", "  @alpine  ", "This is my message to all", "all this is my other message"].map(text => {
+    ["all", "This is my message to all", "all this is my other message", "@allsup", "sup@all"].map(text => {
       it(`return false for ${text}`, () => {
         const payload: GroupMeInfo = { ...DefaultGroupMeInfo, text };
         expect(allHandler.shouldHandle(payload)).toEqual(false);

@@ -1,14 +1,15 @@
+import { Either, isLeft } from "fp-ts/lib/Either";
+
 import { GroupMeInfo } from "../groupMe";
 import { singleton, inject } from "tsyringe";
 import HandlerConfig from "./HandlerConfig";
-import { Either, isLeft } from "fp-ts/lib/Either";
 import GroupMeService from "../services/GroupMeService";
 import GroupMeHandler from "./GroupMeHandler";
 
 @singleton()
 export default class AllHandler extends GroupMeHandler {
   readonly config: HandlerConfig = {
-    regexp: new RegExp(`(^|\s+)@all($|\s+)`, "i"),
+    regexp: /(^|\s+)@all($|\s+)/i,
   };
 
   constructor(@inject(GroupMeService) private readonly groupMeService: GroupMeService) {
@@ -35,7 +36,7 @@ export default class AllHandler extends GroupMeHandler {
     }
 
     const messageText = groupMeInfo.text
-      .split(new RegExp(`(^|\s+)@all($|\s+)`))
+      .split(/(^|\s+)@all($|\s+)/i)
       .reduce((prev, curr) => (prev.length === 0 ? curr.trim() : `${prev} ${curr.trim()}`), "");
     const memberIds = membersResult.right.map(m => m.user_id);
     const mentionString = membersResult.right.map(m => `@${m.nickname}`).join(" ");
