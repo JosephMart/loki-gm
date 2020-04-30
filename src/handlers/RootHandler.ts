@@ -1,8 +1,8 @@
 import { singleton, inject } from "tsyringe";
 import { Either } from "fp-ts/lib/Either";
 import Handler from "./Handler";
-import { GroupMeInfo } from "../services/GroupMeService";
 import HeyHandler from "./HeyHandler";
+import { GroupMeInfo } from "../groupMe";
 
 @singleton()
 export default class RootHandler extends Handler<GroupMeInfo, true> {

@@ -1,10 +1,11 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
+import { isLeft } from "fp-ts/lib/Either";
+
 import HeyHandler from "./HeyHandler";
 import RootHandler from "./RootHandler";
-import { GroupMeInfo } from "../services/GroupMeService";
 import "../mocks/GroupMeServiceMock";
-import { isLeft } from "fp-ts/lib/Either";
+import { GroupMeInfo } from "../groupMe";
 
 /* eslint-disable @typescript-eslint/camelcase */
 const DefaultGroupMeInfo: GroupMeInfo = {

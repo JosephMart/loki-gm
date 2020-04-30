@@ -4,7 +4,8 @@ import { container } from "tsyringe";
 import { isLeft } from "fp-ts/lib/Either";
 
 import RootHandler from "../src/handlers/RootHandler";
-import { GroupMeInfo, GroupMeService } from "../src/services/GroupMeService";
+import GroupMeService from "../src/services/GroupMeService";
+import { GroupMeInfo } from "../src/groupMe";
 
 /**
  * The main lambda for the Loki GroupMe bot. It is the callback that GroupMe will
