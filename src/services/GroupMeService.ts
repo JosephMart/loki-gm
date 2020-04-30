@@ -1,6 +1,6 @@
 import { singleton, inject } from "tsyringe";
 import got from "got";
-import { Either, right, left } from "fp-ts/lib/Either";
+import { Either, right, left, isLeft } from "fp-ts/lib/Either";
 
 import EnvConfigService from "./EnvConfigService";
 import MessagingService from "./MessagingService";
@@ -47,8 +47,12 @@ export class GroupMeService implements MessagingService {
    */
   async getUsers(): Promise<Either<Error, GroupMeUser[]>> {
     try {
-      const { members } = await this.getGroupInfo();
-      return right(members);
+      const result = await this.getGroupInfo();
+      if (isLeft(result)) {
+        return result;
+      }
+
+      return right(result.right.members);
     } catch (e) {
       return left(e as Error);
     }
@@ -57,16 +61,16 @@ export class GroupMeService implements MessagingService {
   /**
    * Get group info
    */
-  async getGroupInfo(): Promise</*Either<Error, */ GroupMeGroupInfo> /*> */ {
-    // try {
-    const { response } = await got
-      .get(`${GroupMeAPI}/groups/${this.envConfigService.GroupID}?token=${this.envConfigService.GroupMeAPIKey}`)
-      .json();
-    return response as GroupMeGroupInfo;
-    // return right(response as GroupMeGroupInfo);
-    // } catch (e) {
-    //   return left(e as Error);
-    // }
+  async getGroupInfo(): Promise<Either<Error, GroupMeGroupInfo>> {
+    try {
+      const { response } = await got
+        .get(`${GroupMeAPI}/groups/${this.envConfigService.GroupID}?token=${this.envConfigService.GroupMeAPIKey}`)
+        .json();
+
+      return right(response as GroupMeGroupInfo);
+    } catch (e) {
+      return left(e as Error);
+    }
   }
 }
 
