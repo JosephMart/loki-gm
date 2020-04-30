@@ -11,7 +11,7 @@ import GroupMeService from "../services/GroupMeService";
 @singleton()
 export default class HeyHandler extends GroupMeHandler {
   readonly config: HandlerConfig = {
-    regexp: new RegExp("hey loki", "i"),
+    regexp: /hey loki/i,
   };
 
   constructor(@inject(GroupMeService) private readonly groupMeService: GroupMeService) {

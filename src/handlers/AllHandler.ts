@@ -51,7 +51,7 @@ export default class AllHandler extends GroupMeHandler {
     });
 
     const result = await this.groupMeService.sendMessage(
-      `${mentionString}${messageText.length === 0 ? messageText : ": "}`,
+      `${mentionString}${messageText.length === 0 ? messageText : `: ${messageText}`}`,
       [
         {
           loci,
