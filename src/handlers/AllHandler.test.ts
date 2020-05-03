@@ -2,10 +2,10 @@ import "reflect-metadata";
 import { container } from "tsyringe";
 import { isLeft } from "fp-ts/lib/Either";
 
-import HeyHandler from "./HeyHandler";
 import RootHandler from "./RootHandler";
 import "../mocks/GroupMeServiceMock";
 import { GroupMeInfo } from "../groupMe";
+import AllHandler from "./AllHandler";
 
 /* eslint-disable @typescript-eslint/camelcase */
 const DefaultGroupMeInfo: GroupMeInfo = {
@@ -24,13 +24,13 @@ const DefaultGroupMeInfo: GroupMeInfo = {
 };
 /* eslint-enable @typescript-eslint/camelcase */
 
-describe("HeyHandler", () => {
+describe("AllHandler", () => {
   let rootHandler: RootHandler;
-  let heyHandler: HeyHandler;
+  let allHandler: AllHandler;
 
   beforeAll(() => {
     rootHandler = container.resolve(RootHandler);
-    heyHandler = container.resolve(HeyHandler);
+    allHandler = container.resolve(AllHandler);
   });
 
   describe(".handle()", () => {
@@ -44,19 +44,25 @@ describe("HeyHandler", () => {
 
   describe(".shouldHandle()", () => {
     // Should handle these
-    ["hey loki", "HEY LOKI", " hEy LOki ", "Hey Loki"].map(text => {
+    ["@all", "  @all  ", "This is my message @aLl", "@ALL this is my other message"].map(text => {
       it(`return true for ${text}`, () => {
         const payload: GroupMeInfo = { ...DefaultGroupMeInfo, text };
-        expect(heyHandler.shouldHandle(payload)).toEqual(true);
+        expect(allHandler.shouldHandle(payload)).toEqual(true);
       });
     });
 
-    // Should NOT handle these
-    ["lol", "lddd", "  ", "boo"].map(text => {
+    // Should handle these
+    ["all", "This is my message to all", "all this is my other message", "@allsup", "sup@all"].map(text => {
       it(`return false for ${text}`, () => {
         const payload: GroupMeInfo = { ...DefaultGroupMeInfo, text };
-        expect(heyHandler.shouldHandle(payload)).toEqual(false);
+        expect(allHandler.shouldHandle(payload)).toEqual(false);
       });
+    });
+
+    it("return false for messages sent by bots", () => {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      const payload: GroupMeInfo = { ...DefaultGroupMeInfo, sender_type: "bot", text: "@all" };
+      expect(allHandler.shouldHandle(payload)).toBe(false);
     });
   });
 });

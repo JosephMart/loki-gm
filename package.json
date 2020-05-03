@@ -7,8 +7,9 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "coverage": "jest --coverage",
-    "lint": "eslint '*/**/*.{js,ts}'",
-    "now:dev": "now dev"
+    "lint": "eslint '{api,src}/**/*.{js,ts}'",
+    "now:dev": "now dev",
+    "compile": "tsc"
   },
   "repository": {
     "type": "git",

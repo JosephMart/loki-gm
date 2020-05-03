@@ -3,6 +3,7 @@
  */
 type HandlerConfig = {
   regexp: RegExp;
+  ignoreBots?: boolean;
 };
 
 export default HandlerConfig;

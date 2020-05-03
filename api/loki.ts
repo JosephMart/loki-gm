@@ -4,8 +4,7 @@ import { container } from "tsyringe";
 import { isLeft } from "fp-ts/lib/Either";
 
 import RootHandler from "../src/handlers/RootHandler";
-import { GroupMeInfo, GroupMeService } from "../src/services/GroupMeService";
-import EnvConfigService from "../src/services/EnvConfigService";
+import { GroupMeInfo } from "../src/groupMe";
 
 /**
  * The main lambda for the Loki GroupMe bot. It is the callback that GroupMe will
@@ -14,10 +13,8 @@ import EnvConfigService from "../src/services/EnvConfigService";
 export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   const groupMeInfo = req.body as GroupMeInfo;
 
-  container.register("MessagingService", { useClass: GroupMeService });
   const handlerRegistry = container.resolve(RootHandler);
-  const actions = handlerRegistry.handle(groupMeInfo);
-  const results = await Promise.all(actions);
+  const results = await handlerRegistry.handle(groupMeInfo);
   results.forEach(r => {
     if (isLeft(r)) {
       console.error(r.left.stack);
