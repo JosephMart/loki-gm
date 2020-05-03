@@ -58,5 +58,11 @@ describe("AllHandler", () => {
         expect(allHandler.shouldHandle(payload)).toEqual(false);
       });
     });
+
+    it("return false for messages sent by bots", () => {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      const payload: GroupMeInfo = { ...DefaultGroupMeInfo, sender_type: "bot", text: "@all" };
+      expect(allHandler.shouldHandle(payload)).toBe(false);
+    });
   });
 });

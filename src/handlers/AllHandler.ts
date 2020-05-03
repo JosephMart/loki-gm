@@ -1,7 +1,7 @@
 import { Either, isLeft } from "fp-ts/lib/Either";
+import { singleton, inject } from "tsyringe";
 
 import { GroupMeInfo } from "../groupMe";
-import { singleton, inject } from "tsyringe";
 import HandlerConfig from "./HandlerConfig";
 import GroupMeService from "../services/GroupMeService";
 import GroupMeHandler from "./GroupMeHandler";
@@ -12,6 +12,7 @@ export default class AllHandler extends GroupMeHandler {
 
   readonly config: HandlerConfig = {
     regexp: AllHandler.atAllRegex,
+    ignoreBots: true,
   };
 
   constructor(@inject(GroupMeService) private readonly groupMeService: GroupMeService) {
@@ -24,7 +25,9 @@ export default class AllHandler extends GroupMeHandler {
    * @param groupMeInfo
    */
   shouldHandle = (groupMeInfo: GroupMeInfo): boolean => {
-    return this.config.regexp.test(groupMeInfo.text);
+    return (
+      (this.config.ignoreBots ? groupMeInfo.sender_type != "bot" : true) && this.config.regexp.test(groupMeInfo.text)
+    );
   };
 
   /**
