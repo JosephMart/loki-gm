@@ -8,8 +8,10 @@ import GroupMeHandler from "./GroupMeHandler";
 
 @singleton()
 export default class AllHandler extends GroupMeHandler {
+  private static atAllRegex = /(?=@all(?:\s|$))@all((?<=\s@all)|(?<=^@all))/i;
+
   readonly config: HandlerConfig = {
-    regexp: /(^|\s*)@all($|\s*)/i,
+    regexp: AllHandler.atAllRegex,
   };
 
   constructor(@inject(GroupMeService) private readonly groupMeService: GroupMeService) {
@@ -36,7 +38,7 @@ export default class AllHandler extends GroupMeHandler {
     }
 
     const messageText = groupMeInfo.text
-      .split(/(^|\s*)@all($|\s*)/i)
+      .split(AllHandler.atAllRegex)
       .reduce((prev, curr) => (prev.length === 0 ? curr.trim() : `${prev} ${curr.trim()}`), "");
     const memberIds = membersResult.right.map(m => m.user_id);
     const mentionString = membersResult.right.map(m => `@${m.nickname}`).join(" ");
