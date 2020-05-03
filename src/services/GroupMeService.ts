@@ -4,7 +4,14 @@ import { Either, right, left, isLeft } from "fp-ts/lib/Either";
 
 import EnvConfigService from "./EnvConfigService";
 import MessagingService from "./MessagingService";
-import { GroupMeAttachment, GroupMePayload, GroupMeUser, GroupMeGroupInfo, GroupMeResponse } from "../groupMe";
+import {
+  GroupMeAttachment,
+  GroupMePayload,
+  GroupMeUser,
+  GroupMeGroupInfo,
+  GroupMeResponse,
+  GroupMeMention,
+} from "../groupMe";
 import GroupService from "./GroupService";
 
 const GroupMeAPI = "https://api.groupme.com/v3";
@@ -18,6 +25,26 @@ export default class GroupMeService implements MessagingService, GroupService<Gr
 
   constructor(@inject(EnvConfigService) envConfigService: EnvConfigService) {
     this.envConfigService = envConfigService;
+  }
+
+  /**
+   * Creates a mention string a mention attachment.
+   * @param users Users to mention
+   */
+  createMentions(users: GroupMeUser[]): [string, GroupMeMention] {
+    const mentionString = users.map(u => `@${u.nickname}`).join(" ");
+    const loci: Array<[number, number]> = [];
+    let start = 0;
+    users.forEach(u => {
+      // +1 for @
+      const length = u.nickname.length + 1;
+      loci.push([start, length]);
+      // +1 for space separator
+      start += length + 1;
+    });
+
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    return [mentionString, { loci, type: "mentions", user_ids: users.map(u => u.user_id) }];
   }
 
   /**

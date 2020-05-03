@@ -2,6 +2,7 @@
 
 import { container } from "tsyringe";
 import { right, Either } from "fp-ts/lib/Either";
+
 import GroupMeService from "../services/GroupMeService";
 import { GroupMeUser, GroupMeGroupInfo } from "../groupMe";
 

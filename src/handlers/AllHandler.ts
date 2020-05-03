@@ -39,27 +39,8 @@ export default class AllHandler extends GroupMeHandler {
     }
 
     const membersToMention = membersResult.right.filter(m => m.user_id != groupMeInfo.user_id);
-
-    const memberIds = membersToMention.map(m => m.user_id);
-    const mentionString = membersToMention.map(m => `@${m.nickname}`).join(" ");
-    const loci: Array<[number, number]> = [];
-    let start = 0;
-    membersToMention.forEach(m => {
-      // +1 for @
-      const length = m.nickname.length + 1;
-      loci.push([start, length + 1]);
-      // +1 for space separator
-      start += length + 1;
-    });
-
-    const result = await this.groupMeService.sendMessage(mentionString, [
-      {
-        loci,
-        type: "mentions",
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        user_ids: memberIds,
-      },
-    ]);
+    const [mentionString, mention] = this.groupMeService.createMentions(membersToMention);
+    const result = await this.groupMeService.sendMessage(mentionString, [mention]);
 
     return [result, ...(await super.handle(groupMeInfo))];
   }
