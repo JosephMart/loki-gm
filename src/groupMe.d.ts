@@ -81,7 +81,7 @@ export type GroupMeInfo = {
   id: string;
   name: string;
   sender_id: string;
-  sender_type: string;
+  sender_type: "user" | "bot";
   source_guid: string;
   system: boolean;
   text: string;
