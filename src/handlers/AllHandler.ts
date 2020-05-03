@@ -8,10 +8,8 @@ import GroupMeHandler from "./GroupMeHandler";
 
 @singleton()
 export default class AllHandler extends GroupMeHandler {
-  private static atAllRegex = /(?=@all(?:\s|$))@all((?<=\s@all)|(?<=^@all))/i;
-
   readonly config: HandlerConfig = {
-    regexp: AllHandler.atAllRegex,
+    regexp: /(?=@all(?:\s|$))@all((?<=\s@all)|(?<=^@all))/i,
     ignoreBots: true,
   };
 
@@ -40,9 +38,6 @@ export default class AllHandler extends GroupMeHandler {
       return [membersResult];
     }
 
-    const messageText = groupMeInfo.text
-      .split(AllHandler.atAllRegex)
-      .reduce((prev, curr) => (prev.length === 0 ? curr.trim() : `${prev} ${curr.trim()}`), "");
     const memberIds = membersResult.right.map(m => m.user_id);
     const mentionString = membersResult.right.map(m => `@${m.nickname}`).join(" ");
     const loci: Array<[number, number]> = [];
@@ -55,17 +50,14 @@ export default class AllHandler extends GroupMeHandler {
       start += length + 1;
     });
 
-    const result = await this.groupMeService.sendMessage(
-      `${mentionString}${messageText.trim().length === 0 ? messageText : `: ${messageText}`}`,
-      [
-        {
-          loci,
-          type: "mentions",
-          // eslint-disable-next-line @typescript-eslint/camelcase
-          user_ids: memberIds,
-        },
-      ],
-    );
+    const result = await this.groupMeService.sendMessage(mentionString, [
+      {
+        loci,
+        type: "mentions",
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        user_ids: memberIds,
+      },
+    ]);
 
     return [result, ...(await super.handle(groupMeInfo))];
   }
