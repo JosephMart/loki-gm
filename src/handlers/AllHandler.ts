@@ -38,11 +38,13 @@ export default class AllHandler extends GroupMeHandler {
       return [membersResult];
     }
 
-    const memberIds = membersResult.right.map(m => m.user_id);
-    const mentionString = membersResult.right.map(m => `@${m.nickname}`).join(" ");
+    const membersToMention = membersResult.right.filter(m => m.user_id != groupMeInfo.user_id);
+
+    const memberIds = membersToMention.map(m => m.user_id);
+    const mentionString = membersToMention.map(m => `@${m.nickname}`).join(" ");
     const loci: Array<[number, number]> = [];
     let start = 0;
-    membersResult.right.forEach(m => {
+    membersToMention.forEach(m => {
       // +1 for @
       const length = m.nickname.length + 1;
       loci.push([start, length + 1]);
