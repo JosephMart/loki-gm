@@ -34,7 +34,7 @@ describe("GroupMeService", () => {
 
   describe(".createMentions()", () => {
     it("return a correct mention string and a valid mention object for the string", () => {
-      const [mentionsString, mention] = groupMeService.createMentions(members);
+      const [mentionsString, mention] = groupMeService.createMentions("", members);
       expect(mentionsString).toMatch("@Superman @Batman");
       expect(mention).toMatchObject({
         loci: [

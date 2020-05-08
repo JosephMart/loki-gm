@@ -39,7 +39,7 @@ export default class AllHandler extends GroupMeHandler {
     }
 
     const membersToMention = membersResult.right.filter(m => m.user_id != groupMeInfo.user_id);
-    const [mentionString, mention] = this.groupMeService.createMentions(membersToMention);
+    const [mentionString, mention] = this.groupMeService.createMentions("👆 ", membersToMention);
     const result = await this.groupMeService.sendMessage(mentionString, [mention]);
 
     return [result, ...(await super.handle(groupMeInfo))];
