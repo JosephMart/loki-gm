@@ -31,7 +31,7 @@ export default class GroupMeService implements MessagingService, GroupService<Gr
    * Creates a mention string a mention attachment.
    * @param users Users to mention
    */
-  createMentions(msgStart: string, users: GroupMeUser[]): [string, GroupMeMention] {
+  createMentions(users: GroupMeUser[], msgStart: string = ""): [string, GroupMeMention] {
     const mentionString = users.map(u => `@${u.nickname}`).join(" ");
     const loci: Array<[number, number]> = [];
     let start = msgStart.length;
