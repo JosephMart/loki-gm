@@ -6,7 +6,7 @@ import { container } from "tsyringe";
 import GroupMeService from "./GroupMeService";
 import { GroupMeUser, GroupMeMention } from "../groupMe";
 
-const members: GroupMeUser[] = [
+const members: Readonly<GroupMeUser>[] = [
   {
     user_id: "123456",
     nickname: "Superman",

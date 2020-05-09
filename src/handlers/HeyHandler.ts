@@ -22,7 +22,7 @@ export default class HeyHandler extends GroupMeHandler {
    * Returns a boolean saying whether or not the handler should handle the information it is given.
    * @param groupMeInfo
    */
-  shouldHandle = (groupMeInfo: GroupMeInfo): boolean => {
+  shouldHandle = (groupMeInfo: Readonly<GroupMeInfo>): boolean => {
     return this.config.regexp.test(groupMeInfo.text);
   };
 
@@ -30,7 +30,7 @@ export default class HeyHandler extends GroupMeHandler {
    * Performs its own handler functions as well as calls those it is the root of.
    * @param groupMeInfo
    */
-  async handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, number>[]> {
+  async handle(groupMeInfo: Readonly<GroupMeInfo>): Promise<Either<Error, number>[]> {
     const result = await this.groupMeService.sendMessage(`Howdy ${groupMeInfo.name}!`);
     return [result, ...(await super.handle(groupMeInfo))];
   }
