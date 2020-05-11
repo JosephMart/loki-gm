@@ -22,7 +22,7 @@ export default class AllHandler extends GroupMeHandler {
    * it is given.
    * @param groupMeInfo
    */
-  shouldHandle = (groupMeInfo: GroupMeInfo): boolean => {
+  shouldHandle = (groupMeInfo: Readonly<GroupMeInfo>): boolean => {
     return (
       (this.config.ignoreBots ? groupMeInfo.sender_type != "bot" : true) && this.config.regexp.test(groupMeInfo.text)
     );
@@ -32,7 +32,7 @@ export default class AllHandler extends GroupMeHandler {
    * Performs its own handler functions as well as calls those it is the parent of.
    * @param groupMeInfo
    */
-  async handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, number>[]> {
+  async handle(groupMeInfo: Readonly<GroupMeInfo>): Promise<Either<Error, number>[]> {
     const membersResult = await this.groupMeService.getMembers();
     if (isLeft(membersResult)) {
       return [membersResult];

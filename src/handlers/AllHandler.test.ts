@@ -8,7 +8,7 @@ import { GroupMeInfo } from "../groupMe";
 import AllHandler from "./AllHandler";
 
 /* eslint-disable @typescript-eslint/camelcase */
-const DefaultGroupMeInfo: GroupMeInfo = {
+const DefaultGroupMeInfo: Readonly<GroupMeInfo> = {
   attachments: [],
   avatar_url: "https://i.groupme.com/123456789",
   created_at: 1302623328,

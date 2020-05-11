@@ -27,7 +27,7 @@ export default class RootHandler extends GroupMeHandler<true> {
    * Entry point for handling a message. Passes the information onto its subhandlers.
    * @param groupMeInfo
    */
-  handle(groupMeInfo: GroupMeInfo): Promise<Either<Error, number>[]> {
+  handle(groupMeInfo: Readonly<GroupMeInfo>): Promise<Either<Error, number>[]> {
     groupMeInfo = this.sanitize(groupMeInfo);
     return super.handle(groupMeInfo);
   }
