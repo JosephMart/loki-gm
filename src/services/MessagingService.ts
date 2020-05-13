@@ -9,5 +9,5 @@ export default interface MessagingService {
    * @param text
    * @param args
    */
-  sendMessage(text: string, ...args: unknown[]): Promise<Either<Error, unknown>>;
+  sendMessage(text: Readonly<string>, ...args: ReadonlyArray<unknown>): Promise<Either<Error, unknown>>;
 }

@@ -31,7 +31,7 @@ export default class GroupMeService implements MessagingService, GroupService<Gr
    * Creates a mention string a mention attachment.
    * @param users Users to mention
    */
-  createMentions(users: GroupMeUser[], msgStart: string = ""): [string, GroupMeMention] {
+  createMentions(users: ReadonlyArray<GroupMeUser>, msgStart: string = ""): [string, GroupMeMention] {
     const mentionString = users.map(u => `@${u.nickname}`).join(" ");
     const loci: Array<[number, number]> = [];
     let start = msgStart.length;
@@ -51,7 +51,7 @@ export default class GroupMeService implements MessagingService, GroupService<Gr
    * Sends a message to GroupMe.
    * @param text
    */
-  async sendMessage(text: string, attachments: GroupMeAttachment[] = []): Promise<Either<Error, number>> {
+  async sendMessage(text: Readonly<string>, attachments: GroupMeAttachment[] = []): Promise<Either<Error, number>> {
     console.log(`Sending text (${text})`);
     const json: GroupMePayload = {
       text,

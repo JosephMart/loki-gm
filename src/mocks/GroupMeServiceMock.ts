@@ -6,7 +6,7 @@ import { right, Either } from "fp-ts/lib/Either";
 import GroupMeService from "../services/GroupMeService";
 import { GroupMeUser, GroupMeGroupInfo } from "../groupMe";
 
-const members: GroupMeUser[] = [
+const members: Readonly<GroupMeUser>[] = [
   {
     user_id: "123456",
     nickname: "Superman",
