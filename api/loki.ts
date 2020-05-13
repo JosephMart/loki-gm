@@ -12,6 +12,7 @@ import { GroupMeInfo } from "../src/groupMe";
  */
 export default async (req: NowRequest, res: NowResponse): Promise<void> => {
   const groupMeInfo = req.body as GroupMeInfo;
+  console.log(`GroupMeInfo: ${JSON.stringify(groupMeInfo)}`);
 
   const handlerRegistry = container.resolve(RootHandler);
   const results = await handlerRegistry.handle(groupMeInfo);

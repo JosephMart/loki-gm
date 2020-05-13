@@ -31,10 +31,10 @@ export default class GroupMeService implements MessagingService, GroupService<Gr
    * Creates a mention string a mention attachment.
    * @param users Users to mention
    */
-  createMentions(users: ReadonlyArray<GroupMeUser>): [string, GroupMeMention] {
+  createMentions(users: ReadonlyArray<GroupMeUser>, msgStart: string = ""): [string, GroupMeMention] {
     const mentionString = users.map(u => `@${u.nickname}`).join(" ");
     const loci: Array<[number, number]> = [];
-    let start = 0;
+    let start = msgStart.length;
     users.forEach(u => {
       // +1 for @
       const length = u.nickname.length + 1;
@@ -44,7 +44,7 @@ export default class GroupMeService implements MessagingService, GroupService<Gr
     });
 
     // eslint-disable-next-line @typescript-eslint/camelcase
-    return [mentionString, { loci, type: "mentions", user_ids: users.map(u => u.user_id) }];
+    return [`${msgStart}${mentionString}`, { loci, type: "mentions", user_ids: users.map(u => u.user_id) }];
   }
 
   /**
