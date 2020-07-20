@@ -1,6 +1,6 @@
 {
   "name": "loki-gm",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Basic GroupMe bot for serverless functions deployment",
   "main": "index.js",
   "scripts": {
