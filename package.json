@@ -24,7 +24,7 @@
   "dependencies": {
     "@now/node": "^1.6.0",
     "fp-ts": "^2.5.4",
-    "got": "^11.8.5",
+    "got": "^12.5.3",
     "mongodb": "^3.5.7",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.2.0",
